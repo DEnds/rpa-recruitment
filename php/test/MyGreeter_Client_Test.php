@@ -15,10 +15,29 @@ class MyGreeter_Client_Test extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function test_getGreeting()
+    public function checkGreeting(){
+
+        $hour = date('H');
+
+        if ($hour >= 0 && $hour < 12){
+
+            return 'Good morning';
+
+        } elseif ($hour >= 12 && $hour < 18){
+
+            return 'Good afternoon';
+
+        } else {
+
+            return 'Good evening';
+        }
+    }
+
+    /**
+     * @depends checkGreeting
+     */
+    public function test_getGreeting($expectedGreeting)
     {
-        $this->assertTrue(
-            strlen($this->greeter->getGreeting()) > 0
-        );
+        $this->assertEquals($expectedGreeting, $this->greeter->getGreeting());
     }
 }
